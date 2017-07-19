@@ -25,31 +25,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 namespace deliberate {
-class Vec3D
+class Vec3D : public QVector3D
 {
 public:
-  Vec3D(const qreal x, const qreal y, const qreal z):m_val(x,y,z){}
-  Vec3D(const QVector3D &val): m_val(val) { }
-  Vec3D(const Vec3D &old): m_val(old.m_val){ }
-  Vec3D():m_val(QVector3D()){}
+  Vec3D(const qreal x, const qreal y, const qreal z):QVector3D(x,y,z){}
+  Vec3D(const QVector3D &val): QVector3D(val) { }
+  Vec3D(const Vec3D &old): QVector3D(old){ }
+  Vec3D():QVector3D(){}
   ~Vec3D(){}
-  qreal x() { return m_val.x(); }
-  qreal y() { return m_val.y(); }
-  qreal z() { return m_val.z(); }
-  void setX(qreal x) { m_val.setX(x); }
-  void setY(qreal y) { m_val.setY(y); }
-  void setZ(qreal z) { m_val.setZ(z); }
+
 
   QString toString() {
-      return QString ("(%1,%2,%3)").arg(x()).arg(y()).arg(z());
+      return QString ("(deliberate::Vec3D %1,%2,%3)").arg(x()).arg(y()).arg(z());
      }
+
+  static Vec3D fromString (const QString &s);
 
 //  QVariant toVariant();
 //  Vec3D(const QVariant & v);
 
 private:
 
-  QVector3D m_val;
 };
 } // namespace
 

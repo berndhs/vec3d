@@ -21,20 +21,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
  ****************************************************************/
 
 #include <QString>
+#include <QDebug>
+#include <stdio.h>
 
-//QVariant Vec3D::toVariant()
-//{/*
-//    QString svar = QString("QVariant (Vec3D, Vec3D(%1, %2, %3))")
-//        .arg(x()).arg(y()).arg(z());
-//    return svar;*/
-//  QString sv = QString("(Vec3D Vec3D(%1, %2, %3))").arg(x()).arg(y()).arg(z());
-//  QVariant v;
-//  v.setValue(sv);
-//  return v;
-//}
+namespace deliberate {
 
-//  Vec3D::Vec3D(const QVariant &v)
-//  {
-//    m_val = QVector3D(v);
-//  }
+Vec3D Vec3D::fromString(const QString &s)
+{
+  qreal qx, qy, qz;
+  char pat[256]="(deliberate::Vec3D %lf,%lf,%lf)";
+  int convs = sscanf (s.toLocal8Bit().data(),pat,&qx,&qy,&qz);
+  if (convs != 3) {
+    qDebug() << "convs is " << convs;
+    return Vec3D();
+  } else {
+    qDebug() << "convs is " << convs;
+    return Vec3D(qx,qy,qz);
+  }
+}
+
+} // namespace
 
